@@ -44,11 +44,18 @@ open class GPXWaypoint: GPXElement, Codable {
         case ageofDGPSData = "ageofdgpsdata"
         case link
         case extensions
+        case dictionary
     }
     
     
     
     // MARK:- Attributes of a waypoint
+    
+    
+    /// Dictionary that contains all attributes after parsing
+    ///
+    /// It can be used for purposes of extension.
+    public var dictionary: [String : String]?
     
     /// A value type for link properties (see `GPXLink`)
     ///
@@ -223,6 +230,7 @@ open class GPXWaypoint: GPXElement, Codable {
     init(dictionary: [String : String]) {
         self.time = ISO8601DateParser.parse(dictionary ["time"])
         super.init()
+        self.dictionary = dictionary
         self.elevation = Convert.toDouble(from: dictionary["ele"])
         self.latitude = Convert.toDouble(from: dictionary["lat"])
         self.longitude = Convert.toDouble(from: dictionary["lon"])
